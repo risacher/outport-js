@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "description": "export from outlook as ical, push to cloud via http, parse",
     "dependencies": {
-        "ical": ""
+        "ical": "",
+        "rrule": ""
     }
 }

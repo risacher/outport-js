@@ -128,6 +128,10 @@ function createReoccuringEvent(item) {
     var pattern = item.getrecurrencepattern;
     var patternType = pattern.recurrencetype;
 
+    // For reasons known only to Microsoft, pattern intervals can be zero in outlook, 
+    // which violates RFC2445.
+    if (pattern.interval === 0) { pattern.interval = 1; }
+
     if (patternType === olRecursDaily) {
 
         recurEvent += "FREQ=DAILY";
