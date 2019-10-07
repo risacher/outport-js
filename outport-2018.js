@@ -15,8 +15,23 @@ var exportMode = "all";                          // "all"  - to export ALL entri
                                                  // "only" - to export ONLY those categories listed; 
 
 var includeHistory = 90;          // how many days back to include old events
-var icsFilename = "H:\\\\outport\\calendar.ics";  // where to store the file
+var fso = new ActiveXObject("Scripting.FileSystemObject");
+var configHandle = fso.OpenTextFile('config.json', 1);
+var jsontext = configHandle.ReadAll();
+configHandle.Close();
 
+var conf;
+
+try {
+	conf = JSON.parse(jsontext);
+} catch (e) {
+    eval('var conf = '+jsontext);
+}
+//alert(JSON.stringify(conf));
+
+
+//var icsFilename = "H:\\\\outport\\calendar.ics";  // where to store the file
+var icsFilename = conf.outfile;
 
 // Outlook Redemption works around limitations imposed by the Outlook
 // Security Patch and Service Pack 2 of MS Office 98/2000 and Office
@@ -338,9 +353,12 @@ function cleanLineEndings(string) {
 
 
 function alert(msg) {
-	if (1) {
+	try {
 		Wscript.echo(msg);
-	}	
+	} catch (e) {
+		var myMsgBox=new ActiveXObject("wscript.shell")
+		myMsgBox.Popup (msg)
+	}
 }
 
 function post_ical(ics) {
@@ -349,8 +367,7 @@ function post_ical(ics) {
 	var xmlhttp = new ActiveXObject("MSXML2.XMLHTTP.6.0");
 	//var xmlhttp = new ActiveXObject("Msxml2.ServerXMLHTTP.6.0"); 
 //	xmlhttp.setOption(2, 13056);
-//	xmlhttp.Open("POST","http://risacher.org/outport/",false);
-	xmlhttp.Open("POST","http://52.21.12.129/outport/",false);
+	xmlhttp.Open("POST", conf.target, false);
 	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xmlhttp.onreadystatechange=function() {	
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
@@ -363,7 +380,7 @@ function post_ical(ics) {
 		}
 	}
 	try { xmlhttp.send(ics); } 
-	catch (e) { WScript.echo(e.message); WScript.Quit (1); }
+	catch (e) { alert(e.message); WScript.Quit (1); }
 }
 
 function fetch_calendar() {
@@ -442,7 +459,6 @@ var oCalItems = oCalendar.Items();
 	ics += "END:VCALENDAR\n";
 //	var myMsgBox=new ActiveXObject("wscript.shell");
 //	myMsgBox.Popup ("Hey, this works"+ics);
-	var fso = new ActiveXObject("Scripting.FileSystemObject");
 	var icsFH = fso.CreateTextFile(icsFilename, true);
 	icsFH.Write(ics);
 	icsFH.Close();

@@ -1,0 +1,5 @@
+{
+  "outfile": "H:\\\\outport\\calendar.ics",
+  "target": "http://server.net/outport/",
+  "debug": false
+}
