@@ -1,3 +1,7 @@
+// This simple node application listens to a port and accepts post requests.  
+// It writes the posted data into 'output.dat' and then moves it to 'latest.ics' 
+// It's intended to be proxied by nginx or yxorp into the server namespace.
+
 var fs = require('fs');
 var http = require('http');
 
