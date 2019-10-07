@@ -1,3 +1,6 @@
+// this file reads the ical file dumped by the appserver, and builds a little text report of all the events for today.  
+// most of the complexity comes from timezones and recurrence relations, which are subtle.
+
 "use strict";
 
 var ical = require('ical');
