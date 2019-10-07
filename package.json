@@ -1,9 +1,12 @@
 {
-    "name": "outport-js",
-    "version": "0.0.1",
-    "description": "export from outlook as ical, push to cloud via http, parse",
-    "dependencies": {
-        "ical": "",
-        "rrule": ""
-    }
+  "name": "outport-js",
+  "version": "0.0.1",
+  "description": "export from outlook as ical, push to cloud via http, parse",
+  "dependencies": {
+    "FileSaver": "^0.10.0",
+    "file-saver": "^2.0.1",
+    "google-auth-library": "~0.9.6",
+    "googleapis": "~2.1.5",
+    "ical": "git://github.com/peterbraden/ical.js.git"
+  }
 }
