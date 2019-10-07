@@ -1,6 +1,8 @@
 var fs = require('fs');
 var http = require('http');
 
+process.title = "outport(node)";
+
 var paths = {
     '/publish': function(req, res){
         req.addListener("data", function(chunk) {
@@ -28,19 +30,30 @@ var server = http.createServer(function(req, res) {
 //        req.pipe(process.stdout);
         var w = fs.createWriteStream('output.dat');
         req.pipe(w);
-        
-//        req.on('data', function (chunk) {
+        req.on('end', function () {
+            res.writeHead(200, {
+                'Content-Length': body.length,
+                'Content-Type': 'text/plain' });
+            res.write(body);
+          res.end();
+          fs.renameSync('output.dat', 'latest.ics');
+        });
+
+               //        req.on('data', function (chunk) {
             
         //}
-    }    
-
-
-    res.writeHead(200, {
+    } else {
+      body = "Methods other than POST don't really do anything."
+      res.writeHead(200, {
         'Content-Length': body.length,
         'Content-Type': 'text/plain' });
-    res.write(body);
-    res.end();
- 
+      res.write(body);
+      res.end();
+    }
+    
+
+    
+    
 }).listen(8002);
 
 
