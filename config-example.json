@@ -1,4 +1,5 @@
 {
+  "comment": "This is the config file for the Windows-side JScript",
   "outfile": "H:\\\\outport\\calendar.ics",
   "target": "http://server.net/outport/",
   "debug": false
