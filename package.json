@@ -6,7 +6,7 @@
     "FileSaver": "^0.10.0",
     "file-saver": "^2.0.1",
     "google-auth-library": "~0.9.6",
-    "googleapis": "~2.1.5",
+    "googleapis": "~59.0.0",
     "ical": "git://github.com/peterbraden/ical.js.git"
   }
 }
